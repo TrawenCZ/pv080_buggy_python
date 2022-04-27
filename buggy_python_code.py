@@ -4,6 +4,7 @@
 import subprocess
 import base64
 import flask
+import importlib
 
 # Input injection
 def transcode_file(request, filename):
@@ -23,7 +24,8 @@ class RunBinSh(object):
         return (subprocess.Popen, (('/bin/sh',),))
 
 def import_urlib_version(version):
-    exec("import urllib%s as urllib" % version)
+    versioned = "urllib" + version
+    importlib.import_module(versioned)
 
 @app.route('/')
 def index():
